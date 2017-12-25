@@ -92,3 +92,9 @@ import network
 net = network.Network([784, 30, 10])
 
 net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
+
+
+# check one digit
+# import numpy as np
+# np.argmax(net.feedforward(test_data[0][0]))
+# np.argmax(net.feedforward( ))
