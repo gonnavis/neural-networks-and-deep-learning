@@ -76,6 +76,17 @@ class Network(object):
                 for k in xrange(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
+    
+                # mini_batch.txt
+                print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+                print len(mini_batch) # 10
+                print len(mini_batch[0]) # 2
+                print len(mini_batch[0][0]) # 784
+                print len(mini_batch[0][1]) # 10
+                print     mini_batch[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
+                print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+                raw_input()
+
             if test_data:
                 print "Epoch {0}: {1} / {2}".format(
                     j, self.evaluate(test_data), n_test) # Epoch 0: 9054 / 10000
@@ -159,10 +170,11 @@ class Network(object):
 
 #### Miscellaneous functions
 def sigmoid(z):
-    # z.txt
-    print 'z------------------------------------------------------------------'
-    print z
-    raw_input()
+    
+    # # z.txt
+    # print 'z------------------------------------------------------------------'
+    # print z
+    # raw_input()
 
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
@@ -170,3 +182,12 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
+
+
+
+    
+# # mini_batch.txt
+# print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+# print len(mini_batch)
+# print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+# raw_input()
