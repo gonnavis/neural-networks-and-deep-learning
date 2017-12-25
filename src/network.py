@@ -81,7 +81,6 @@ class Network(object):
             print len(mini_batches[0]) # 10
             print len(mini_batches[0][0]) # 2
             print len(mini_batches[0][1]) # 2
-            # print     mini_batches[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
             print 'mini_batches>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
             raw_input()
 
