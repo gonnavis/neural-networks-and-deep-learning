@@ -74,6 +74,17 @@ class Network(object):
             mini_batches = [
                 training_data[k:k+mini_batch_size]
                 for k in xrange(0, n, mini_batch_size)]
+    
+            # mini_batches.txt
+            print 'mini_batches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+            print len(mini_batches) # 5000
+            print len(mini_batches[0]) # 10
+            print len(mini_batches[0][0]) # 2
+            print len(mini_batches[0][1]) # 2
+            # print     mini_batches[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
+            print 'mini_batches>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+            raw_input()
+
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
     
