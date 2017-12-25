@@ -75,27 +75,27 @@ class Network(object):
                 training_data[k:k+mini_batch_size]
                 for k in xrange(0, n, mini_batch_size)]
     
-            # mini_batches.txt
-            print 'mini_batches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-            print len(mini_batches) # 5000
-            print len(mini_batches[0]) # 10
-            print len(mini_batches[0][0]) # 2
-            print len(mini_batches[0][1]) # 2
-            print 'mini_batches>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-            raw_input()
+            # # mini_batches.txt
+            # print 'mini_batches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+            # print len(mini_batches) # 5000
+            # print len(mini_batches[0]) # 10
+            # print len(mini_batches[0][0]) # 2
+            # print len(mini_batches[0][1]) # 2
+            # print 'mini_batches>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+            # raw_input()
 
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
     
-                # mini_batch.txt
-                print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-                print len(mini_batch) # 10
-                print len(mini_batch[0]) # 2
-                print len(mini_batch[0][0]) # 784
-                print len(mini_batch[0][1]) # 10
-                print     mini_batch[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
-                print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                raw_input()
+                # # mini_batch.txt
+                # print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+                # print len(mini_batch) # 10
+                # print len(mini_batch[0]) # 2
+                # print len(mini_batch[0][0]) # 784
+                # print len(mini_batch[0][1]) # 10
+                # print     mini_batch[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
+                # print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+                # raw_input()
 
             if test_data:
                 print "Epoch {0}: {1} / {2}".format(
@@ -126,6 +126,24 @@ class Network(object):
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
         self.weights = [w-(eta/len(mini_batch))*nw
                         for w, nw in zip(self.weights, nabla_w)]
+        '''
+        >>> len(net.weights)  // 2
+        >>> len(net.weights[0])  // 30
+        >>> len(net.weights[1])  // 10
+        >>> len(net.weights[0][0])  // 784
+        >>> len(net.weights[0][1])  // 784
+        >>> len(net.weights[0][2])  // 784
+        >>> len(net.weights[1][0])  // 30
+        >>> len(net.weights[1][1])  // 30
+        >>> len(net.weights[0][0][0])  // error
+
+        weights[
+            [ // 30
+            ],
+            [ // 10
+            ].
+        ]
+        '''
         self.biases = [b-(eta/len(mini_batch))*nb
                        for b, nb in zip(self.biases, nabla_b)]
 
