@@ -52,7 +52,14 @@ class Network(object):
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially."""
         if test_data: n_test = len(test_data)
-        n = len(training_data)
+        n = len(training_data) # 50000
+
+        print '+++++++++++++++++++++++++++++++'
+        print 'n'
+        print n
+        print '-------------------------------'
+        raw_input()
+
         for j in xrange(epochs):
             random.shuffle(training_data)
             mini_batches = [
@@ -73,6 +80,16 @@ class Network(object):
         is the learning rate."""
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        print '+++++++++++++++++++++++++++++++'
+        # print len(mini_batch[0])
+        print len(mini_batch[0][0]) # 784
+        # print mini_batch[0][0]
+        print '-------------------------------'
+        raw_input()
+
+        # print len(mini_batch[0][0]) # 784
+
         for x, y in mini_batch:
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
