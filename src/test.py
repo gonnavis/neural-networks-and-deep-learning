@@ -75,6 +75,7 @@ validation_data[ // 10000
     8, // digit
   ],
 ]
+'''
 
 
 # print len(test_data) # 10000
