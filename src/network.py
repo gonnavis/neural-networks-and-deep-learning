@@ -159,6 +159,11 @@ class Network(object):
 
 #### Miscellaneous functions
 def sigmoid(z):
+    # z.txt
+    print 'z------------------------------------------------------------------'
+    print z
+    raw_input()
+
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
 
