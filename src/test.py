@@ -52,17 +52,17 @@ training_data[ // 10000
 '''
 
 
-print len(validation_data) # 10000
-print len(validation_data[0]) # 2
-print len(validation_data[1]) # 2
-print len(validation_data[2]) # 2
-print len(validation_data[0][0]) # 784
-# print len(validation_data[0][1]) # error
-print     validation_data[0][1] # 3
-print     validation_data[1][1] # 8
-print len(validation_data[0][0][0]) # 1
-print len(validation_data[0][0][1]) # 1
-# print len(validation_data[0][0][0][0]) # error
+# print len(validation_data) # 10000
+# print len(validation_data[0]) # 2
+# print len(validation_data[1]) # 2
+# print len(validation_data[2]) # 2
+# print len(validation_data[0][0]) # 784
+# # print len(validation_data[0][1]) # error
+# print     validation_data[0][1] # 3
+# print     validation_data[1][1] # 8
+# print len(validation_data[0][0][0]) # 1
+# print len(validation_data[0][0][1]) # 1
+# # print len(validation_data[0][0][0][0]) # error
 
 '''
 validation_data[ // 10000
@@ -104,7 +104,7 @@ test_data[ // 10000
 '''
 
 
-raw_input()
+# raw_input()
 
 import network
 net = network.Network([784, 30, 10])

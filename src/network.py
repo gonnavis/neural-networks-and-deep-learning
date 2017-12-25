@@ -38,6 +38,15 @@ class Network(object):
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
+
+            # print 'w------------------------------------------------------------------'
+            # print w
+            # print 'a------------------------------------------------------------------'
+            # print a
+            # print 'b------------------------------------------------------------------'
+            # print b
+            # raw_input()
+
             a = sigmoid(np.dot(w, a)+b)
         return a
 
@@ -54,11 +63,11 @@ class Network(object):
         if test_data: n_test = len(test_data)
         n = len(training_data) # 50000
 
-        print '+++++++++++++++++++++++++++++++'
-        print 'n'
-        print n
-        print '-------------------------------'
-        raw_input()
+        # print '+++++++++++++++++++++++++++++++'
+        # print 'n'
+        # print n
+        # print '-------------------------------'
+        # raw_input()
 
         for j in xrange(epochs):
             random.shuffle(training_data)
@@ -69,7 +78,7 @@ class Network(object):
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
                 print "Epoch {0}: {1} / {2}".format(
-                    j, self.evaluate(test_data), n_test)
+                    j, self.evaluate(test_data), n_test) # Epoch 0: 9054 / 10000
             else:
                 print "Epoch {0} complete".format(j)
 
@@ -81,12 +90,12 @@ class Network(object):
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-        print '+++++++++++++++++++++++++++++++'
-        # print len(mini_batch[0])
-        print len(mini_batch[0][0]) # 784
-        # print mini_batch[0][0]
-        print '-------------------------------'
-        raw_input()
+        # print '+++++++++++++++++++++++++++++++'
+        # # print len(mini_batch[0])
+        # print len(mini_batch[0][0]) # 784
+        # # print mini_batch[0][0]
+        # print '-------------------------------'
+        # raw_input()
 
         # print len(mini_batch[0][0]) # 784
 
