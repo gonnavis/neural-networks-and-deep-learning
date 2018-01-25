@@ -15,6 +15,19 @@ import random
 
 # Third-party libraries
 import numpy as np
+import pdb
+# pdb.set_trace() 
+# (Pdb) p b
+# (Pdb) p w
+# (Pdb) c
+
+# # mini_batch.txt
+# print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+# print len(mini_batch)
+# print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+# raw_input()
+
+
 
 class Network(object):
 
@@ -30,25 +43,40 @@ class Network(object):
         won't set any biases for those neurons, since biases are only
         ever used in computing the outputs from later layers."""
         self.num_layers = len(sizes)
-        self.sizes = sizes
+        self.sizes = sizes # [784, 30, 10]
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
+        ''' biases len(2)
+          [array(30, 1), array(10, 1), ]
+        '''
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
+        ''' zip(sizes[:-1], sizes[1:])
+                                    [(784,30),(30,10)]
+        '''
+        ''' weights len(2)
+          [array(30, 784), array(10, 30), ]
+        '''
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
+            ''' zip(self.biases, self.weights) len(2)
+                [
+                    ( array(30, 1), array(30, 784) ),
+                    ( array(10, 1), array(10, 30) ),
+                ]
+            '''
 
-            # print 'w------------------------------------------------------------------'
-            # print w
-            # print 'a------------------------------------------------------------------'
-            # print a
-            # print 'b------------------------------------------------------------------'
-            # print b
-            # raw_input()
+            ''' b array(30, 1) '''
+            ''' w array(30, 784) '''
+            ''' a array(784, 1) '''
+
+            ''' b array(10, 1) '''
+            ''' w array(10, 30) '''
+            ''' a array(30, 1) '''
 
             a = sigmoid(np.dot(w, a)+b)
-        return a
+        return a # array(10, 1)
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
             test_data=None):
@@ -63,39 +91,20 @@ class Network(object):
         if test_data: n_test = len(test_data)
         n = len(training_data) # 50000
 
-        # print '+++++++++++++++++++++++++++++++'
-        # print 'n'
-        # print n
-        # print '-------------------------------'
-        # raw_input()
-
         for j in xrange(epochs):
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]
                 for k in xrange(0, n, mini_batch_size)]
-    
-            # # mini_batches.txt
-            # print 'mini_batches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-            # print len(mini_batches) # 5000
-            # print len(mini_batches[0]) # 10
-            # print len(mini_batches[0][0]) # 2
-            # print len(mini_batches[0][1]) # 2
-            # print 'mini_batches>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-            # raw_input()
 
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
-    
-                # # mini_batch.txt
-                # print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-                # print len(mini_batch) # 10
-                # print len(mini_batch[0]) # 2
-                # print len(mini_batch[0][0]) # 784
-                # print len(mini_batch[0][1]) # 10
-                # print     mini_batch[0][1] # [[ 0.] [ 0.] [ 0.] [ 0.] [ 0.] [ 1.] [ 0.] [ 0.] [ 0.] [ 0.]]
-                # print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                # raw_input()
+
+            ''' mini_batch len(10)
+                [
+                    ( array(784, 1), array(10, 1) )
+                ]
+            '''
 
             if test_data:
                 print "Epoch {0}: {1} / {2}".format(
@@ -109,45 +118,37 @@ class Network(object):
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
         nabla_b = [np.zeros(b.shape) for b in self.biases]
+        ''' biases len(2)
+          [array(30, 1), array(10, 1), ]
+        '''
         nabla_w = [np.zeros(w.shape) for w in self.weights]
+        ''' weights len(2)
+          [array(30, 784), array(10, 30), ]
+        '''
 
-        # print '+++++++++++++++++++++++++++++++'
-        # # print len(mini_batch[0])
-        # print len(mini_batch[0][0]) # 784
-        # # print mini_batch[0][0]
-        # print '-------------------------------'
-        # raw_input()
-
-        # print len(mini_batch[0][0]) # 784
-
+        ''' mini_batch len(10)
+            [
+                ( array(784, 1), array(10, 1) ),
+            ]
+        '''
         for x, y in mini_batch:
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
+            ''' delta_nabla_b len(2)
+                [ array(30, 1), array(10, 1) ]
+            '''
+            ''' delta_nabla_w len(2)
+                [ array(30, 784), array(10, 30) ]
+            '''
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
         self.weights = [w-(eta/len(mini_batch))*nw
                         for w, nw in zip(self.weights, nabla_w)]
-        '''
-        >>> len(net.weights)  // 2
-        >>> len(net.weights[0])  // 30
-        >>> len(net.weights[1])  // 10
-        >>> len(net.weights[0][0])  // 784
-        >>> len(net.weights[0][1])  // 784
-        >>> len(net.weights[0][2])  // 784
-        >>> len(net.weights[1][0])  // 30
-        >>> len(net.weights[1][1])  // 30
-        >>> len(net.weights[0][0][0])  // error
-
-        weights[
-            [ // 30
-            ],
-            [ // 10
-            ].
-        ]
-        '''
         self.biases = [b-(eta/len(mini_batch))*nb
                        for b, nb in zip(self.biases, nabla_b)]
 
     def backprop(self, x, y):
+        ''' x array(784, 1) '''
+        ''' y array(10, 1) '''
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
         ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
@@ -159,6 +160,14 @@ class Network(object):
         activations = [x] # list to store all the activations, layer by layer
         zs = [] # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
+            ''' zip(self.biases, self.weights) len(2)
+                [
+                    ( array(30, 1), array(30, 784) ),
+                    ( array(10, 1), array(10, 30) ),
+                ]
+            '''
+            ''' w array(30, 784) '''
+            ''' activation array(784, 1) '''
             z = np.dot(w, activation)+b
             zs.append(z)
             activation = sigmoid(z)
@@ -180,7 +189,7 @@ class Network(object):
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
-        return (nabla_b, nabla_w)
+        return (nabla_b, nabla_w) 
 
     def evaluate(self, test_data):
         """Return the number of test inputs for which the neural
@@ -198,12 +207,7 @@ class Network(object):
 
 #### Miscellaneous functions
 def sigmoid(z):
-    
-    # # z.txt
-    # print 'z------------------------------------------------------------------'
-    # print z
-    # raw_input()
-
+    pdb.set_trace()
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
 
@@ -214,8 +218,3 @@ def sigmoid_prime(z):
 
 
     
-# # mini_batch.txt
-# print 'mini_batch<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-# print len(mini_batch)
-# print 'mini_batch>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-# raw_input()
